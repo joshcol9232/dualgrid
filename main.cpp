@@ -43,7 +43,7 @@ int main() {
 
   // Write to output txt
   std::ofstream outputf;
-  outputf.open("/data/users/jcolclou/cpp_projects/output.txt");
+  outputf.open("./output.txt");
   for (const auto &vert : verts)
     outputf << vert << std::endl;
 
