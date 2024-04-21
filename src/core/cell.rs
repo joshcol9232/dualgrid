@@ -33,7 +33,7 @@ where
     where
         for<'a> &'a B: Basis<R, I>
     {
-        let mut neighbours = [GridSpace::zeros(); num_vertices(R)];
+        let mut neighbours = [GridSpace::<I>::zeros(); num_vertices(R)];
 
         for (i, n) in neighbours.iter_mut().enumerate() {
             // See write up - each individual bit in the `i` will correspond to if
