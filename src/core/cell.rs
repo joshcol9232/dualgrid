@@ -1,7 +1,7 @@
 use crate::core::{RealSpace, GridSpace};
 use crate::core::basis::Basis;
 
-const fn num_vertices(real_dims: usize) -> usize { 2usize.pow(real_dims as u32) }
+pub const fn num_vertices(real_dims: usize) -> usize { 2usize.pow(real_dims as u32) }
 
 pub struct Cell<const R: usize, const I: usize>
 where
