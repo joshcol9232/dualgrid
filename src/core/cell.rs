@@ -1,22 +1,21 @@
-use nalgebra::SVector;
-
+use crate::core::{RealSpace, GridSpace};
 use crate::core::basis::Basis;
 
 const fn num_vertices(real_dims: usize) -> usize { 2usize.pow(real_dims as u32) }
 
 pub struct Cell<const R: usize, const I: usize>
 where
-    [SVector<f32, R>; num_vertices(R)]: Sized
+    [RealSpace<R>; num_vertices(R)]: Sized
 {
-    pub verts: [SVector<f32, R>; num_vertices(R)],
-    pub indices: SVector<usize, I>,
+    pub verts: [RealSpace<R>; num_vertices(R)],
+    pub indices: GridSpace<I>,
 }
 
 impl<const R: usize, const I: usize> Cell<R, I>
 where
-    [SVector<f32, R>; num_vertices(R)]: Sized,
+    [RealSpace<R>; num_vertices(R)]: Sized,
 {
-    pub fn from_intersection<B>(intersection: SVector<f32, R>,
+    pub fn from_intersection<B>(intersection: RealSpace<R>,
                                 basis: &B) -> Self
     where
         for<'a> &'a B: Basis<R, I>
@@ -29,12 +28,12 @@ where
     }
 
     /// Returns the grid space indices of the neighbours of an intersection.
-    fn get_neighbours<B>(intersection: &SVector<f32, R>,
-                         basis: &B) -> [SVector<usize, I>; num_vertices(R)]
+    fn get_neighbours<B>(intersection: &RealSpace<R>,
+                         basis: &B) -> [GridSpace<I>; num_vertices(R)]
     where
         for<'a> &'a B: Basis<R, I>
     {
-        let mut neighbours = [SVector::zeros(); num_vertices(R)];
+        let mut neighbours = [GridSpace::zeros(); num_vertices(R)];
 
         for (i, n) in neighbours.iter_mut().enumerate() {
             // See write up - each individual bit in the `i` will correspond to if

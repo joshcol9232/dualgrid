@@ -1,8 +1,10 @@
-use nalgebra::SVector;
+use crate::core::{RealSpace, GridSpace};
 
 pub trait Basis<const R: usize, const I: usize> : Sized {
-    fn gridspace(&self, real_point: &SVector<f32, R>) -> SVector<usize, I>;
-    fn realspace(&self, grid_space: &SVector<usize, I>) -> SVector<f32, R>;
+    /// Convert a real point into the closest grid space.
+    fn gridspace(&self, real_point: &RealSpace<R>) -> GridSpace<I>;
+    /// Convert a grid point to it's associated real space.
+    fn realspace(&self, grid_space: &GridSpace<I>) -> RealSpace<R>;
 }
 
 

@@ -1,6 +1,7 @@
 #![feature(generic_const_exprs)]
 
 pub mod core;
+pub mod NDBasis;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
