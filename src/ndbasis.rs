@@ -18,7 +18,7 @@ impl<const R: usize, const I: usize> Basis<R, I> for LinearBasis<R, I> {
     fn gridspace(&self, real_point: &RealSpace<R>) -> GridSpace<I> {
         let mut gsp = GridSpace::<I>::zeros();
         for (j, e) in self.basis_vectors.iter().enumerate() {
-            gsp[j] = ( real_point.dot(&self.basis_vectors[j]) - self.offsets[j] ) as usize;
+            gsp[j] = ( real_point.dot(&self.basis_vectors[j]) - self.offsets[j] ) as isize;
         }
         gsp
     }

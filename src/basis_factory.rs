@@ -19,3 +19,17 @@ impl BasisFactory {
     }
 }
 
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::core::basis::Basis;
+
+    #[test]
+    fn cubic() {
+        let cubic = BasisFactory::cubic2d(None);
+        //let cells = cubic.generate(1);
+    }
+
+}
+

@@ -1,2 +1,4 @@
 /target
 rustc-ice-*
+Cargo.lock
+*.txt
