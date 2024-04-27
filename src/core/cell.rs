@@ -26,15 +26,15 @@ where
         B: Basis<R, I>
     {
         let mut indices = basis.gridspace(&intersection);
+
         // NOTE: Overwrite "known" indices at the intersection this cell is generated from.
         // Avoids an issue with going +/-1 due to the "real" location being exactly on the
         // intersection.
-
         for (idx, j) in set_nums.iter().enumerate() {
             indices[*j] = index_at_intersection[idx];
         }
 
-        let verts = Self::get_neighbours(&indices, set_nums, index_at_intersection)
+        let verts = Self::get_neighbours(&indices, set_nums)
             .map(|n| basis.realspace(&n));
 
         Self { verts, indices }
@@ -56,11 +56,8 @@ where
     }
 
     fn get_neighbours(indices: &GridSpace<I>,
-                      j_combos: &[usize],
-                      known_indices: &[isize]) -> [GridSpace<I>; num_vertices(R)] {
+                      j_combos: &[usize]) -> [GridSpace<I>; num_vertices(R)] {
         let directions = Self::epsillon();
-        println!("EPSILLON: {:?}", directions);
-        println!("js: {:?}", j_combos);
         
         // Copy initial index to each neighbour.
         let mut neighbours: [GridSpace<I>; num_vertices(R)] = [indices.clone_owned(); num_vertices(R)];
@@ -75,7 +72,6 @@ where
 
         for (idx, e) in directions.iter().enumerate() {
             let increment = (e.transpose() * &kroneker).transpose();
-            println!("DOT {:?} . {:?} = {:?}", e, kroneker, increment);
             neighbours[idx] += increment;
         }
         neighbours

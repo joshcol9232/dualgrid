@@ -49,7 +49,7 @@ mod tests {
     fn penrose() {
         let penrose = BasisFactory::penrose(None);
 
-        let cells = penrose.generate(1);
+        let cells = penrose.generate(10);
         tools::write_to_file("./penrose.txt", &cells).unwrap();
     }
 }
