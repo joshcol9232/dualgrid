@@ -3,6 +3,7 @@
 pub mod core;
 pub mod linear_basis;
 pub mod basis_factory;
+pub mod filtering;
 
 #[cfg(test)]
 mod tests {

@@ -57,7 +57,17 @@ def render_cells_solid_2D(
 
 
 if __name__ == "__main__":
-    loaded_verts = np.loadtxt(sys.argv[1], delimiter=",")
+    import argparse
+
+    parser = argparse.ArgumentParser(prog="tilerender")
+    parser.add_argument("input")
+    parser.add_argument("-o", "--output")
+    parser.add_argument("-x", "--x-lim", type=float, default=15)
+    parser.add_argument("-y", "--y-lim", type=float, default=15)
+    args = parser.parse_args()
+
+    
+    loaded_verts = np.loadtxt(args.input, delimiter=",")
 
     fig, ax = plt.subplots(1, figsize=(10, 10))
     ax.axis("equal")
@@ -65,7 +75,11 @@ if __name__ == "__main__":
     # plt.plot(loaded_verts[:,0], loaded_verts[:,1], ".")
     # plt.gca().set_aspect("equal", adjustable="box")
     render_cells_solid_2D(loaded_verts, ax)
-    ax.set_xlim(-15, 15)
-    ax.set_ylim(-15, 15)
+    ax.set_xlim(-args.x_lim, args.x_lim)
+    ax.set_ylim(-args.y_lim, args.y_lim)
     
-    plt.show()
+    if args.output:
+        plt.savefig(args.output)
+    else:
+        plt.show()
+

@@ -25,7 +25,7 @@ fn get_index_ranges<const R: usize, const I: usize>(max_range: isize) -> impl It
     // E.g k = 1, in 2d:
     // ((-1, 0, 1) (-1, 0, 1))
     // NOTE: As f32, as this gets added to other vectors of f32.
-    (0..R).map(|_| (-max_range..=max_range).map(|int| int as f32))
+    (0..R).map(|_| (1-max_range..max_range).map(|int| int as f32))
     // Then, cartesian product of these two sets gives all combinations between sets.
           .multi_cartesian_product()
           .map(|range_vec| SVector::<f32, R>::from_vec(range_vec))
@@ -49,11 +49,10 @@ impl<const R: usize, const I: usize> Basis<R, I> for LinearBasis<R, I> {
 
     fn generate(&self, index_range: usize) -> Vec<Cell<R, I>> where [(); num_vertices(R)]: {
         // Derived
-        let total_number_of_intersections = index_range.pow(I as u32);
         let index_combos = get_index_ranges::<R, I>(index_range as isize)
             .collect::<Vec<SVector<f32, R>>>();
 
-        let mut cells = Vec::with_capacity(total_number_of_intersections);
+        let mut cells = vec![]; //Vec::with_capacity(total_number_of_intersections);
 
         // For each combination of "construction sets", there are a set of intersections.
         // Each combination must be between R different sets (the number of dimensions).
