@@ -84,7 +84,8 @@ impl<const R: usize, const I: usize> Basis<R, I> for LinearBasis<R, I> {
                                                    // maths...
                         .into_owned();
 
-                    let cell = Cell::from_intersection(intersection, self);
+                    let k_range_indices = nalgebra::convert_ref_unchecked::<SVector<f32, R>, SVector<isize, R>>(&k_range);
+                    let cell = Cell::from_intersection(intersection, &j_combination, k_range_indices.as_slice(), self);
                     cells.push(cell);
                 }
             } else {
@@ -152,13 +153,10 @@ mod tests {
         use crate::core::tools;
 
         println!("LINEAR");
-        /*
         let lin = LinearBasis::from_vectors([[1.0, 0.0].into(),
                                              [0.0, 1.0].into(),
                                              [1.0/2.0f32.sqrt(), 1.0/2.0f32.sqrt()].into()],
                                              [0.1, 0.1, 0.1]);
-        */
-        let lin = cubic2d();
         let cells = lin.generate(1);
         println!("CELLS: {:?}", cells);
         tools::write_to_file("linear_out.txt", &cells).unwrap();
