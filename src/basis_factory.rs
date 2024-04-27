@@ -1,7 +1,7 @@
 use crate::core::RealSpace;
 use crate::linear_basis::LinearBasis;
 
-const fn fix_even(n: usize) -> usize {
+pub const fn fix_even(n: usize) -> usize {
     if n % 2 == 0 { n / 2 } else { n }
 }
 
@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn penrose() {
-        let penrose = BasisFactory::penrose(None);
+        let penrose = BasisFactory::penrose(Some(tools::random_offsets()));
 
         let mut cells = penrose.generate(8);
         cells = filtering::filter_by_max_index_rad(cells, 5);

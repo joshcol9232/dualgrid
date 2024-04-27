@@ -28,6 +28,17 @@ pub const fn factorial(n: usize) -> usize {
     FACTORIAL[n]
 }
 
+pub  fn random_offsets<const I: usize>() -> [f32; I] {
+    use rand::prelude::*;
+    let mut rng = rand::thread_rng();
+
+    let mut out = [0.0; I];
+    for o in out.iter_mut() {
+        *o = rng.gen::<f32>();
+    }
+    out
+}
+
 pub fn write_to_file<P, const R: usize, const I: usize>(path: P, cells: &Vec<Cell<R, I>>) -> std::io::Result<()>
 where
     P: AsRef<Path>,
